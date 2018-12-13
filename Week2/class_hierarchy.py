@@ -111,7 +111,6 @@ def set_points(points, speeds):
             speeds[p] = (speeds[p][0], -speeds[p][1])
 
 
-
 # Основная программа
 if __name__ == "__main__":
     pygame.init()
@@ -156,10 +155,10 @@ if __name__ == "__main__":
         color.hsla = (hue, 100, 50, 100)
         draw_points(points)
         draw_points(get_knot(points, steps), "line", 3, color)
-        if not pause:
-            set_points(points, speeds)
-        if show_help:
-            draw_help()
+        #if not pause:
+        #    set_points(points, speeds)
+        #if show_help:
+        #    draw_help()
 
         pygame.display.flip()
 
