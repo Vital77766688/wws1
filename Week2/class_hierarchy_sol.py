@@ -6,6 +6,11 @@ SCREEN_DIM = (800, 600)
 
 class Vec2d:
 
+    """
+    Performs vector operations
+
+    """
+
     def __init__(self, x):
         self.x = x
         self.x1 = x[0]
@@ -28,9 +33,16 @@ class Vec2d:
     def __len__(self):
         return math.sqrt(self.x1 * self.x1 + self.x2 * self.x2)
 
+    def vec(self):
+        return self.x2 - self.x1
+
 
 
 class Polyline:
+    """
+    Contains drawing methods
+
+    """
 
     # "Отрисовка" точек
     def draw_points(self, points, style="points", width=3, color=(255, 255, 255)):
@@ -63,9 +75,6 @@ class Polyline:
         res = []
         for i in range(-2, len(points) - 2):
             ptn = []
-            #ptn.append(mul(add(points[i], points[i + 1]), 0.5))
-            #ptn.append(points[i + 1])
-            #ptn.append(mul(add(points[i + 1], points[i + 2]), 0.5))
             ptn.append((points[i] + points[i + 1]) * 0.5)
             ptn.append(points[i + 1])
             ptn.append((points[i + 1] + points[i + 2]) * 0.5)
@@ -84,12 +93,43 @@ class Polyline:
 
 
 class Knot(Polyline):
+    """
+    Draw in the program
 
-    def draw_line(self, points, width=3, color=(255,255,255)):
-        pass
+    """
 
-    def draw_circle(self):
-        pass
+    def draw_line(self, points, steps, width=3, color=(255,255,255)):
+        self.draw_points(self.get_knot(points, steps), style="line", width=width, color=color)
+
+    def draw_point(self, points):
+        self.draw_points(points)
+
+class Help:
+    """
+    Helper
+
+    """
+
+    def draw_help(self):
+        gameDisplay.fill((50, 50, 50))
+        font1 = pygame.font.SysFont("courier", 24)
+        font2 = pygame.font.SysFont("serif", 24)
+        data = []
+        data.append(["F1", "Show Help"])
+        data.append(["R", "Restart"])
+        data.append(["P", "Pause/Play"])
+        data.append(["Num+", "More points"])
+        data.append(["Num-", "Less points"])
+        data.append(["", ""])
+        data.append([str(steps), "Current points"])
+
+        pygame.draw.lines(gameDisplay, (255, 50, 50, 255), True, [
+            (0, 0), (800, 0), (800, 600), (0, 600)], 5)
+        for i, text in enumerate(data):
+            gameDisplay.blit(font1.render(
+                text[0], True, (128, 128, 255)), (100, 100 + 30 * i))
+            gameDisplay.blit(font2.render(
+                text[1], True, (128, 128, 255)), (200, 100 + 30 * i))
 
 
 # Основная программа
@@ -107,6 +147,9 @@ if __name__ == "__main__":
 
     hue = 0
     color = pygame.Color(0)
+
+    dots = Knot()
+    help = Help()
 
     while working:
         for event in pygame.event.get():
@@ -134,13 +177,12 @@ if __name__ == "__main__":
         gameDisplay.fill((0, 0, 0))
         hue = (hue + 1) % 360
         color.hsla = (hue, 100, 50, 100)
-        dots = Polyline()
-        dots.draw_points(points)
-        dots.draw_points(dots.get_knot(points, steps), "line", 3, color)
+        dots.draw_point(points)
+        dots.draw_line(points, steps, 3, color)
         if not pause:
             dots.set_points(points, speeds)
-        #if show_help:
-        #    draw_help()
+        if show_help:
+            help.draw_help()
 
         pygame.display.flip()
 
