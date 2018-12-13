@@ -1,5 +1,5 @@
 import math
-from abc import ABC, abstractclassmethod
+from abc import ABC, abstractmethod
 
 
 class Base(ABC):
@@ -11,15 +11,19 @@ class Base(ABC):
     def get_answer(self):
         return [int(x >= 0.5) for x in self.data]
 
-
-
-
-class A(Base):
-
     def get_score(self):
         ans = self.get_answer()
         return sum([int(x == y) for (x, y) in zip(ans, self.result)]) \
                / len(ans)
+
+
+    @abstractmethod
+    def get_loss(self):
+        pass
+
+
+
+class A(Base):
 
     def get_loss(self):
         return sum([(x - y) * (x - y) for (x, y) in zip(self.data,
@@ -27,14 +31,6 @@ class A(Base):
 
 
 class B(Base):
-
-    def get_answer(self):
-        return [int(x >= 0.5) for x in self.data]
-
-    def get_score(self):
-        ans = self.get_answer()
-        return sum([int(x == y) for (x, y) in zip(ans, self.result)]) \
-               / len(ans)
 
     def get_loss(self):
         return -sum([y * math.log(x) + (1 - y) * math.log(1 - x)
@@ -59,11 +55,6 @@ class B(Base):
 
 
 class C(Base):
-
-    def get_score(self):
-        ans = self.get_answer()
-        return sum([int(x == y) for (x, y) in zip(ans, self.result)]) \
-               / len(ans)
 
     def get_loss(self):
         return sum([abs(x - y) for (x, y) in zip(self.data,
