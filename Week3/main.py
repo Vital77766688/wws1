@@ -7,6 +7,7 @@ class AbstractEffect(Hero, ABC):
     def __init__(self, base):
         self.base = base
 
+    @abstractmethod
     def get_stats(self):
         return self.base.get_stats()
 
