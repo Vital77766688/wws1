@@ -213,12 +213,12 @@ class HelpWindow(ScreenHandle):
         self.data.append([" ←", "Move Left"])
         self.data.append([" ↑ ", "Move Top"])
         self.data.append([" ↓ ", "Move Bottom"])
-        self.data.append([" H ", "Show Help"])
+        self.data.append([" H ", "Show/Hide Help"])
         self.data.append(["Num+", "Zoom +"])
         self.data.append(["Num-", "Zoom -"])
         self.data.append([" R ", "Restart Game"])
         self.data.append([" M ", "Show mini-map"])
-        self.data.append(["F1", "Some help inforamtion"])
+        self.data.append(["Python", "Final Project"])
     # _FIXME You can add some help information
 
     def connect_engine(self, engine):

@@ -67,7 +67,7 @@ while engine.working:
                 engine.working = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_h:
-                    engine.show_help = not engine.show_help
+                    show_help = not show_help
                 if event.key == pygame.K_KP_PLUS:
                     size = size + 1
                     create_game(size, False)
@@ -78,8 +78,6 @@ while engine.working:
                     create_game(size, True)
                 if event.key == pygame.K_ESCAPE:
                     engine.working = False
-                if event.key == pygame.K_F1:
-                    show_help = not show_help
                 if event.key == pygame.K_m:
                     show_map = not show_map
                 if engine.game_process:
